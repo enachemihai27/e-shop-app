@@ -127,7 +127,7 @@
                                     window.location.reload();
                                 }else if(data.status == 'error'){
                                     Swal.fire(
-                                        "Can t Delete!", data.message
+                                        "Can t Delete!", data.message, 'error'
                                     )
                                 }
                             },

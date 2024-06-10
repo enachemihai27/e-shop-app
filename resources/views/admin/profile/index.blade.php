@@ -2,7 +2,6 @@
 
 @section('content')
 
-
     <section class="section">
         <div class="section-header">
             <h1>Profile</h1>
@@ -25,13 +24,15 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="form-group col-12">
-                                        <div class="mb-3">
-                                            <img width="100" height="100" src="{{asset(Auth::user()->image)}}">
-                                        </div>
-                                        <label>Image</label>
-                                        <input type="file" name="image" class="form-control" value="">
+                                    <div class="form-group">
+                                        <img
+                                            src="{{Auth::user()->image ? asset(Auth::user()->image) : asset('frontend/images/ts-2.jpg')}}"
+                                            alt="img" style="width: 200px; height: 200px;"
+                                            class="img-fluid">
+
+                                        <input id="image" name="image" type="file">
                                     </div>
+
 
                                     <div class="form-group col-md-6 col-12">
                                         <label>Name</label>
@@ -51,7 +52,6 @@
                         </form>
                     </div>
                 </div>
-
 
 
                 <div class="col-12 col-md-12 col-lg-7">
@@ -74,7 +74,8 @@
                                     </div>
                                     <div class="form-group  col-12">
                                         <label>Confirm Password</label>
-                                        <input type="password" name="password_confirmation" class="form-control" value="">
+                                        <input type="password" name="password_confirmation" class="form-control"
+                                               value="">
                                     </div>
 
                                 </div>

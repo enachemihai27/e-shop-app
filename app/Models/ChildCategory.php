@@ -16,4 +16,5 @@ class ChildCategory extends Model
     public function sub_category(){
         return $this->belongsTo(SubCategory::class);
     }
+
 }
