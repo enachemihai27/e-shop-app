@@ -32,8 +32,8 @@ class ProductDataTable extends DataTable
                                     <i class="fas fa-cog"></i>
                                   </button>
                                   <div class="dropdown-menu">
-                                    <a class="dropdown-item has-icon" href="#"><i class="far fa-heart"></i> Action</a>
-                                    <a class="dropdown-item has-icon" href="#"><i class="far fa-file"></i> Another action</a>
+                                    <a class="dropdown-item has-icon" href="'.route('admin.products-image-gallery.index', ['product' => $query->id]).'"><i class="far fa-heart"></i> Image Gallery</a>
+                                    <a class="dropdown-item has-icon" href="'.route('admin.products-variant.index', ['product' => $query->id]).'"><i class="far fa-file"></i> Variants</a>
                                     <a class="dropdown-item has-icon" href="#"><i class="far fa-clock"></i> Something else here</a>
                                   </div>
                                 </div>';
@@ -42,7 +42,7 @@ class ProductDataTable extends DataTable
                 return $editBtn . $deleteBtn . $moreButton;
             })
             ->addColumn('image', function ($query) {
-                return $img = "<img width='70px' src = '" . asset($query->thumb_image) . "' ></img>";
+                return $img = "<img width='70px' src = '".asset($query->thumb_image) . "' />";
             })
             ->addColumn('type', function ($query) {
                 switch ($query->product_type) {

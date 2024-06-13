@@ -19,6 +19,26 @@ trait ImageUploadHelper
         }
     }
 
+
+    public function uploadMultiImages(Request $request, $inputName, $path)
+    {
+        $paths = [];
+        if ($request->hasFile($inputName)) {
+            $images = $request->{$inputName};
+
+            if ($images != null) {
+                foreach ($images as $image) {
+                    $imageName = rand() . '_' . $image->getClientOriginalName();
+                    $image->move(public_path($path), $imageName);
+
+                    $paths[] = $path . '/' . $imageName;
+                }
+            }
+            return $paths;
+        }
+    }
+
+
     public function updateImage(Request $request, $inputName, $path, $oldPath = null)
     {
         if ($request->hasFile($inputName)) {
