@@ -7,7 +7,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class AdminProfileSedder extends Seeder
+class AdminProfileSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,7 +18,7 @@ class AdminProfileSedder extends Seeder
 
         DB::table('vendors')->insert([
             [
-                'name' => 'Admin user',
+                'name' => 'Vendor shop',
                 'banner' => 'uploads/123.jpg',
                 'phone' => '123123',
                 'email' => 'admin@gmail.com',

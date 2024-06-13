@@ -54,6 +54,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->as('admin.')->group(
     Route::get('products/get-child-categories', [ProductController::class, 'getChildCategories'])->name('products.get-child-categories');
     Route::put('products/change-status', [ProductController::class, 'changeStatus'])->name('products.change-status');
     Route::resource('products', ProductController::class);
+
+   /* Product variants routes*/
     Route::resource('products-image-gallery', ProductImageGalleryController::class);
     Route::put('products-variant/change-status', [ProductVariantController::class, 'changeStatus'])->name('products-variant.change-status');
     Route::resource('products-variant', ProductVariantController::class);

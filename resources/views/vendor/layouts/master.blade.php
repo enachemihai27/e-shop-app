@@ -24,6 +24,8 @@
 
     <link rel="stylesheet" href="{{asset('frontend/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/ss/responsive.css')}}">
+    <link rel="stylesheet" href="{{asset('backend/assets/modules/summernote/summernote-bs4.css')}}">
+    <link rel="stylesheet" href="//cdn.datatables.net/2.0.7/css/dataTables.dataTables.min.css">
     <!-- <link rel="stylesheet" href="css/rtl.css"> -->
 </head>
 
@@ -93,8 +95,24 @@
 <!--classycountdown js-->
 <script src="{{asset('frontend/js/jquery.classycountdown.js')}}"></script>
 
+<script src="{{asset('backend/assets/modules/summernote/summernote-bs4.js')}}"></script>
+
+<script src="//cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
+
 <!--main/custom js-->
 <script src="{{asset('frontend/js/main.js')}}"></script>
+
+
+<script>
+    $('.summernote').summernote({
+        height: 150
+    });
+
+
+</script>
+
+@stack('scripts')
+
 </body>
 
 </html>

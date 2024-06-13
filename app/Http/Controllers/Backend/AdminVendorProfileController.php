@@ -61,7 +61,7 @@ class AdminVendorProfileController extends Controller
 
         $vendor->save();
 
-        toastr('Updated suuccessfully', 'success');
+        toastr('Updated successfully!', 'success');
 
         return redirect()->back();
 

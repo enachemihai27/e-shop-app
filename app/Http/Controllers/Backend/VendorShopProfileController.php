@@ -2,17 +2,23 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Helpers\ImageUploadHelper;
 use App\Http\Controllers\Controller;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VendorShopProfileController extends Controller
 {
+    use ImageUploadHelper;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('vendor.shop-profile.index');
+        $profile = Vendor::where('user_id', Auth::user()->id)->first();
+
+        return view('vendor.shop-profile.index', compact('profile'));
     }
 
     /**
@@ -28,7 +34,37 @@ class VendorShopProfileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'banner' => ['image', 'max:3000', 'nullable'],
+            'name' => ['required', 'max:200'],
+            'phone' => ['required', 'max:50'],
+            'email' => ['required','email' ,'max:200'],
+            'address' => 'required',
+            'description' => 'required',
+            'fb_link' => ['nullable', 'url'],
+            'inst_link' => ['nullable', 'url']
+        ]);
+
+        $vendor = Vendor::where('user_id', Auth::user()->id)->first();
+
+        $imagePath = $this->updateImage($request, 'banner', 'uploads', $vendor->banner);
+
+
+        $vendor->banner = empty(!$imagePath) ? $imagePath : $vendor->banner;
+        $vendor->name = $request->name;
+        $vendor->phone = $request->phone;
+        $vendor->email = $request->email;
+        $vendor->address = $request->address;
+        $vendor->description = $request->description;
+        $vendor->fb_link = $request->fb_link;
+        $vendor->inst_link = $request->inst_link;
+
+
+        $vendor->save();
+
+        toastr('Updated successfully!', 'success');
+
+        return redirect()->back();
     }
 
     /**
