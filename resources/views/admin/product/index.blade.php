@@ -34,4 +34,34 @@
 
 @push('scripts')
     {{ $dataTable->scripts() }}
+
+
+    <script>
+        $(document).ready(function (){
+            $('body').on('click', '.change-status', function (){
+                let isChecked = $(this).is(':checked');
+                let id = $(this).data('id');
+
+                $.ajax({
+                    url: "{{ route('admin.products.change-status') }}",
+                    method: 'PUT',
+                    data: {
+                        status: isChecked,
+                        id: id,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(data){
+                        toastr.success(data.message);
+                    },
+                    error: function(xhr, status, error){
+                        toastr.error('An error occurred: ' + xhr.responseText);
+                        console.log('Error:', error);
+                        console.log('Status:', status);
+                        console.log('Response:', xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+
 @endpush

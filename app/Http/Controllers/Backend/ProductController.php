@@ -9,6 +9,9 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ChildCategory;
 use App\Models\Product;
+use App\Models\ProductImageGallery;
+use App\Models\ProductVariant;
+use App\Models\ProductVariantItem;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -169,7 +172,23 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        $galleryImages = ProductImageGallery::where('product_id', $product->id)->get();
+        foreach ($galleryImages as $image){
+            $this->deleteImage($image->image);
+            $image->delete();
+        }
+
+        $variants = ProductVariant::where('product_id', $product->id)->get();
+        foreach ($variants as $variant){
+            $variant->productVariantItems()->delete();
+            $variant->delete();
+        }
+
+        $this->deleteImage($product->thumb_image);
+        $product->delete();
+        return response(['status' => 'success', 'message' => 'Product deleted successfully!']);
     }
 
     public function getSubCategories(Request $request)
@@ -184,5 +203,21 @@ class ProductController extends Controller
         $childCategories = ChildCategory::where('sub_category_id',$request->id)->get();
 
         return $childCategories;
+    }
+
+
+    public function changeStatus(Request $request){
+
+        try {
+            $product = Product::findOrFail($request->id);
+
+            $product->status = $request->status === 'true' ? 1 : 0;
+            $product->save();
+
+            return response()->json(['message' => 'Status has been updated!']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error updating status'], 500);
+        }
+
     }
 }

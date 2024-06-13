@@ -52,6 +52,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->as('admin.')->group(
     /*Products routes*/
     Route::get('products/get-sub-categories', [ProductController::class, 'getSubCategories'])->name('products.get-sub-categories');
     Route::get('products/get-child-categories', [ProductController::class, 'getChildCategories'])->name('products.get-child-categories');
+    Route::put('products/change-status', [ProductController::class, 'changeStatus'])->name('products.change-status');
     Route::resource('products', ProductController::class);
     Route::resource('products-image-gallery', ProductImageGalleryController::class);
     Route::put('products-variant/change-status', [ProductVariantController::class, 'changeStatus'])->name('products-variant.change-status');
@@ -59,10 +60,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->as('admin.')->group(
 
 
    /* Product variant items routes*/
-    Route::get('products-variant-item/{itemId}/edit', [ProductVariantItemController::class, 'edit'])->name('products-variant-item.edit');
     Route::get('products-variant-item/{productId}/{variantId}', [ProductVariantItemController::class, 'index'])->name('products-variant-item.index');
     Route::get('products-variant-item/create/{productId}/{variantId}', [ProductVariantItemController::class, 'create'])->name('products-variant-item.create');
     Route::post('products-variant-item', [ProductVariantItemController::class, 'store'])->name('products-variant-item.store');
+    Route::get('products-variant-item-edit/{itemId}', [ProductVariantItemController::class, 'edit'])->name('products-variant-item.edit');
     Route::put('products-variant-item{itemId}', [ProductVariantItemController::class, 'update'])->name('products-variant-item.update');
     Route::delete('products-variant-item/{itemId}', [ProductVariantItemController::class, 'destroy'])->name('products-variant-item.destroy');
+    Route::put('products-variant-item/change-status', [ProductVariantItemController::class, 'changeStatus'])->name('products-variant-item.change-status');
 });

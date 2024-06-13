@@ -57,15 +57,63 @@ class ProductVariantItemController extends Controller
     public function edit(string $id){
 
         $item = ProductVariantItem::findOrFail($id);
-
-
         return view('admin.product.variant-item.edit', compact('item'));
 
 
     }
 
+
+    public function update(Request $request, string $id){
+
+        $request->validate([
+
+            'item_name' => ['required', 'max:200'],
+            'item_price' => ['integer'],
+            'is_default' => ['required'],
+            'status' => ['required']
+        ]);
+
+        $item = ProductVariantItem::findOrFail($id);
+
+        $item->name = $request->item_name;
+        $item->price = $request->item_price;
+        $item->is_default = $request->is_default;
+        $item->status = $request->status;
+        $item->save();
+
+        toastr('Updated successfully!', 'success');
+
+
+        return redirect()->route('admin.products-variant-item.index',
+            ['productId' => $item->productVariant->product_id , 'variantId' => $item->product_variant_id]);
+    }
+
+
+
+
     public function destroy(string $id){
 
+        $item = ProductVariantItem::findOrFail($id);
+
+        $item->delete();
+
+        return response(['status' => 'success', 'message' => 'Product variant item deleted successfully!']);
+
+    }
+
+
+    public function changeStatus(Request $request){
+
+        try {
+            $item = ProductVariantItem::findOrFail($request->id);
+
+            $item->status = $request->status === 'true' ? 1 : 0;
+            $item->save();
+
+            return response()->json(['message' => 'Status has been updated!']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error updating status'], 500);
+        }
 
     }
 }

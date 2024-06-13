@@ -24,8 +24,26 @@
                                 @method('PUT')
 
                                 <div class="form-group">
+                                    <label>Variant Name</label>
+                                    <input name="variant_name" type="text" class="form-control" value="{{$item->productVariant->name}}" readonly>
+                                </div>
+
+                                <div class="form-group">
                                     <label>Name</label>
-                                    <input name="name" type="text" class="form-control" value="{{$item->name}}">
+                                    <input name="item_name" type="text" class="form-control" value="{{$item->name}}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Price <code>Set 0 to make it free</code></label>
+                                    <input name="item_price" type="text" class="form-control" value="{{$item->price}}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputState">Is default</label>
+                                    <select name="is_default" id="inputState" class="form-control">
+                                        <option {{$item->is_default == 1 ? 'selected' : ''}} value="1">Yes</option>
+                                        <option {{$item->is_default == 0 ? 'selected' : ''}} value="0">No</option>
+                                    </select>
                                 </div>
 
                                 <div class="form-group">
