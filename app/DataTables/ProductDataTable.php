@@ -44,6 +44,11 @@ class ProductDataTable extends DataTable
             ->addColumn('image', function ($query) {
                 return $img = "<img width='70px' src = '".asset($query->thumb_image) . "' />";
             })
+
+            ->addColumn('vendor', function ($query) {
+                return $query->vendor->name;
+            })
+
             ->addColumn('type', function ($query) {
                 switch ($query->product_type) {
                     case 'new_arrival' :
@@ -123,6 +128,7 @@ class ProductDataTable extends DataTable
             Column::make('image'),
             Column::make('name'),
             Column::make('price'),
+            Column::make('vendor'),
             Column::make('status'),
             Column::make('type')->width(100),
             Column::computed('action')

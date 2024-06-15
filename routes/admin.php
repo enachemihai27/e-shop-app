@@ -55,8 +55,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->as('admin.')->group(
     Route::put('products/change-status', [ProductController::class, 'changeStatus'])->name('products.change-status');
     Route::resource('products', ProductController::class);
 
-   /* Product variants routes*/
+   /* Product image gallery routes*/
     Route::resource('products-image-gallery', ProductImageGalleryController::class);
+
+
+    /*Product variant routes*/
     Route::put('products-variant/change-status', [ProductVariantController::class, 'changeStatus'])->name('products-variant.change-status');
     Route::resource('products-variant', ProductVariantController::class);
 
@@ -69,4 +72,5 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->as('admin.')->group(
     Route::put('products-variant-item{itemId}', [ProductVariantItemController::class, 'update'])->name('products-variant-item.update');
     Route::delete('products-variant-item/{itemId}', [ProductVariantItemController::class, 'destroy'])->name('products-variant-item.destroy');
     Route::put('products-variant-item/change-status', [ProductVariantItemController::class, 'changeStatus'])->name('products-variant-item.change-status');
+
 });

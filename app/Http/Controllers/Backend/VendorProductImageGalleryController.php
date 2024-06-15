@@ -2,28 +2,25 @@
 
 namespace App\Http\Controllers\Backend;
 
-
-use App\DataTables\GalleryImageDataTable;
-use App\DataTables\ProductImageGalleryDataTable;
+use App\DataTables\VendorProductImageGalleryDataTable;
 use App\Helpers\ImageUploadHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductImageGallery;
-
 use Illuminate\Http\Request;
 
-class ProductImageGalleryController extends Controller
+class VendorProductImageGalleryController extends Controller
 {
-    use ImageUploadHelper;
 
+    use ImageUploadHelper;
     /**
      * Display a listing of the resource.
      */
-    public function index(ProductImageGalleryDataTable $dataTable, Request $request)
+    public function index(VendorProductImageGalleryDataTable $dataTable, Request $request)
     {
-
         $product = Product::findOrFail($request->product);
-        return $dataTable->render('admin.product.image-gallery.index', compact('product'));
+
+        return $dataTable->render('vendor.product.image-gallery.index', compact('product'));
     }
 
     /**
@@ -58,14 +55,12 @@ class ProductImageGalleryController extends Controller
         toastr('Uploaded successfully!');
 
         return redirect()->back();
-
     }
 
     /**
      * Display the specified resource.
      */
-    public
-    function show(string $id)
+    public function show(string $id)
     {
         //
     }
@@ -73,8 +68,7 @@ class ProductImageGalleryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public
-    function edit(string $id)
+    public function edit(string $id)
     {
         //
     }
@@ -82,8 +76,7 @@ class ProductImageGalleryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public
-    function update(Request $request, string $id)
+    public function update(Request $request, string $id)
     {
         //
     }

@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class ProductImageGalleryDataTable extends DataTable
+class VendorProductImageGalleryDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -23,7 +23,7 @@ class ProductImageGalleryDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query){
-                return "<a href = '".route('admin.products-image-gallery.destroy', $query->id)."' class='btn btn-danger ml-2 delete-item'><i class='fas fa-trash-alt'></i></a>";
+                return "<a href = '".route('vendor.products-image-gallery.destroy', $query->id)."' class='btn btn-danger ml-2 delete-item'><i class='fas fa-trash-alt'></i></a>";
             })
             ->addColumn('image', function ($query){
                 return  "<img width='200px' src = '".asset($query->image)."' ></img>";
