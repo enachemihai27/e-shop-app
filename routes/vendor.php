@@ -39,16 +39,12 @@ Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->as('vendor.')->gro
 
 
     /* Product variant items routes*/
-/*    Route::get('products-variant-item/{productId}/{variantId}', [VendorProductVariantItemController::class, 'index'])->name('products-variant-item.index');
+    Route::get('products-variant-item/{productId}/{variantId}', [VendorProductVariantItemController::class, 'index'])->name('products-variant-item.index');
     Route::get('products-variant-item/create/{productId}/{variantId}', [VendorProductVariantItemController::class, 'create'])->name('products-variant-item.create');
     Route::post('products-variant-item', [VendorProductVariantItemController::class, 'store'])->name('products-variant-item.store');
     Route::get('products-variant-item-edit/{itemId}', [VendorProductVariantItemController::class, 'edit'])->name('products-variant-item.edit');
     Route::put('products-variant-item{itemId}', [VendorProductVariantItemController::class, 'update'])->name('products-variant-item.update');
     Route::delete('products-variant-item/{itemId}', [VendorProductVariantItemController::class, 'destroy'])->name('products-variant-item.destroy');
-    Route::put('products-variant-item/change-status', [VendorProductVariantItemController::class, 'changeStatus'])->name('products-variant-item.change-status');*/
-
-
-
-
+    Route::put('products-variant-item/change-status', [VendorProductVariantItemController::class, 'changeStatus'])->name('products-variant-item.change-status');
 
 });

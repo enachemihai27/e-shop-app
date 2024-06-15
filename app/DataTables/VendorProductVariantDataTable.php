@@ -26,24 +26,22 @@ class VendorProductVariantDataTable extends DataTable
 
             ->addColumn('action', function ($query) {
 
-                $manageOption = "<a href = '" . route('admin.products-variant-item.index', ['productId' => request()->product, 'variantId' => $query->id]) . "' class='btn btn-info mr-2'><i class='far fa-edit'> Variant items</i></a>";
-                $editBtn = "<a href = '" . route('admin.products-variant.edit', $query->id) . "' class='btn btn-primary'><i class='far fa-edit'></i></a>";
-                $deleteBtn = "<a href = '" . route('admin.products-variant.destroy', $query->id) . "' class='btn btn-danger ml-2 delete-item'><i class='fas fa-trash-alt'></i></a>";
+                $manageOption = "<a href = '" . route('vendor.products-variant-item.index', ['productId' => request()->product, 'variantId' => $query->id]) . "' class='btn btn-info' style='margin-right: 5px !important;'><i class='far fa-edit'> Variant items</i></a>";
+                $editBtn = "<a href = '" . route('vendor.products-variant.edit', $query->id) . "' class='btn btn-primary' style='margin-right: 5px !important;'><i class='far fa-edit'></i></a>";
+                $deleteBtn = "<a href = '" . route('vendor.products-variant.destroy', $query->id) . "' class='btn btn-danger delete-item'><i class='fas fa-trash-alt'></i></a>";
                 return $manageOption . $editBtn . $deleteBtn;
             })
 
 
             ->addColumn('status', function ($query) {
                 if ($query->status == 1) {
-                    $button = '<label class="custom-switch mt-2">
-                        <input data-id="' . $query->id . '" type="checkbox" checked name="custom-switch-checkbox" class="custom-switch-input change-status">
-                        <span class="custom-switch-indicator"></span>
-                        </label>';
+                    $button = '<div class="form-check form-switch">
+                                    <input class="form-check-input change-status" style="height: 20px !important; width: 50px !important;" data-id="' . $query->id . '" type="checkbox" checked name="custom-switch-checkbox" >
+                                </div>';
                 } else {
-                    $button = '<label class="custom-switch mt-2">
-                        <input data-id="' . $query->id . '" type="checkbox" name="custom-switch-checkbox" class="custom-switch-input change-status">
-                        <span class="custom-switch-indicator"></span>
-                        </label>';
+                    $button = '<div class="form-check form-switch">
+                                    <input class="form-check-input change-status" style="height: 20px !important; width: 50px !important;" data-id="' . $query->id . '" type="checkbox" name="custom-switch-checkbox" >
+                                </div>';
                 }
                 return $button;
 
