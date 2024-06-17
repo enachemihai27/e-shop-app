@@ -15,9 +15,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h4>Create variant item</h4>
-
                         </div>
-
                         <div class="card-body">
                             @include('admin.layouts.flash-message')
                             <form action="{{route('admin.products-variant-item.store')}}" method="POST">

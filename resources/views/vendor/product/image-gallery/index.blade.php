@@ -24,7 +24,7 @@
                                                 <div class="card-header">
                                                     <h4>Product: {{$product->name}}</h4>
                                                 </div>
-                                                <form class="card-body" action="{{route('vendor.products-variant.store')}}" method="POST" enctype="multipart/form-data">
+                                                <form class="card-body" action="{{route('vendor.products-image-gallery.store')}}" method="POST" enctype="multipart/form-data">
                                                     @csrf
                                                     <div class="form-group wsus__input">
                                                         <label>Image <code>(Multiple image supported!)</code></label>

@@ -33,7 +33,7 @@ class VendorProductDataTable extends DataTable
                                     <ul class="dropdown-menu">
 
                                            <li> <a class="dropdown-item has-icon" href="' . route('vendor.products-image-gallery.index', ['product' => $query->id]) . '"><i class="far fa-heart"></i> Image Gallery</a></li>
-                                           <li> <a class="dropdown-item has-icon" href="' . route('vendor.products-variant.index', ['product' => $query->id]) . '"><i class="far fa-file"></i> Variants</a> </li>
+                                           <li> <a class="dropdown-item has-icon" href="' . route('vendor.products-variant.index', ['product' => $query->id]) . '"><i class="far fa-file"></i> Characteristic</a> </li>
 
                                     </ul>
                                 </div>';
@@ -62,6 +62,17 @@ class VendorProductDataTable extends DataTable
 
                 }
             })
+
+            ->addColumn('is_approved', function ($query) {
+                $active = "<i class='badge bg-success'>Approved</i> ";
+                $inactive = "<i class='badge bg-warning'>Pending</i> ";
+                if($query->is_approved == 1){
+                    return $active;
+                }else{
+                    return $inactive;
+                }
+
+            })
             ->addColumn('status', function ($query) {
                 if ($query->status == 1) {
                     $button = '<div class="form-check form-switch">
@@ -75,7 +86,7 @@ class VendorProductDataTable extends DataTable
                 return $button;
 
             })
-            ->rawColumns(['image', 'action', 'status', 'type'])
+            ->rawColumns(['image', 'action', 'status', 'type', 'is_approved'])
             ->setRowId('id');
     }
 
@@ -120,6 +131,7 @@ class VendorProductDataTable extends DataTable
             Column::make('image')->width(150),
             Column::make('name'),
             Column::make('price'),
+            Column::make('is_approved'),
             Column::make('type')->width(100),
             Column::make('status')->width(100),
             Column::computed('action')

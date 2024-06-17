@@ -9,6 +9,8 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ChildCategory;
 use App\Models\Product;
+use App\Models\ProductImageGallery;
+use App\Models\ProductVariant;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -181,7 +183,27 @@ class VendorProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        if(!$product->vendor_id == Auth::user()->vendor->id){
+            abort(404);
+        }
+
+        $galleryImages = ProductImageGallery::where('product_id', $product->id)->get();
+        foreach ($galleryImages as $image){
+            $this->deleteImage($image->image);
+            $image->delete();
+        }
+
+        $variants = ProductVariant::where('product_id', $product->id)->get();
+        foreach ($variants as $variant){
+            $variant->productVariantItems()->delete();
+            $variant->delete();
+        }
+
+        $this->deleteImage($product->thumb_image);
+        $product->delete();
+        return response(['status' => 'success', 'message' => 'Product deleted successfully!']);
     }
 
 

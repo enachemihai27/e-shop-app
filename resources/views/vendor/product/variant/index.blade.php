@@ -7,11 +7,15 @@
 
             <div class="row">
                 <div class="col-xl-9 col-xxl-10 col-lg-9 ms-auto">
+                    <div class="d-flex justify-content-end mb-2">
+                        <a href="{{route('vendor.products.index')}}" class="btn btn-warning"><i class="fas fa-arrow-left "></i> Back</a>
+                    </div>
                     <div class="dashboard_content mt-2 mt-md-0">
-                        <h3><i class="far fa-user"></i> Product variants</h3>
+                        <h3><i class="far fa-user"></i>Product characteristics</h3>
                         <h6>Product: {{$product->name}}</h6>
                         <div class="creat_btn">
-                            <a href="{{route('vendor.products-variant.create', ['product' => $product->id])}}" class="btn btn-primary"><i class="fas fa-plus"></i> Create variant</a>
+
+                            <a href="{{route('vendor.products-variant.create', ['product' => $product->id])}}" class="btn btn-primary"><i class="fas fa-plus"></i> Create </a>
                         </div>
                         <div class="wsus__dashboard_profile">
                             @include('admin.layouts.flash-message')
@@ -37,7 +41,7 @@
                 let id = $(this).data('id');
 
                 $.ajax({
-                    url: "{{ route('vendor.products.change-status') }}",
+                    url: "{{ route('vendor.products-variant.change-status') }}",
                     method: 'PUT',
                     data: {
                         status: isChecked,

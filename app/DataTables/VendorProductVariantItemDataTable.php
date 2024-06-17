@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\ProductVariant;
+use App\Models\ProductVariantItem;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class VendorProductVariantDataTable extends DataTable
+class VendorProductVariantItemDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -22,16 +22,29 @@ class VendorProductVariantDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-
-
             ->addColumn('action', function ($query) {
 
-                $manageOption = "<a href = '" . route('vendor.products-variant-item.index', ['productId' => request()->product, 'variantId' => $query->id]) . "' class='btn btn-info' style='color: white; margin-right: 5px !important;'><i class='far fa-edit'> Characteristic items</i></a>";
-                $editBtn = "<a href = '" . route('vendor.products-variant.edit', $query->id) . "' class='btn btn-primary' style='margin-right: 5px !important;'><i class='far fa-edit'></i></a>";
-                $deleteBtn = "<a href = '" . route('vendor.products-variant.destroy', $query->id) . "' class='btn btn-danger delete-item'><i class='fas fa-trash-alt'></i></a>";
-                return $manageOption . $editBtn . $deleteBtn;
+                $editBtn = "<a href = '" . route('vendor.products-variant-item.edit', $query->id) . "' class='btn btn-primary' style='margin-right: 5px;'><i class='far fa-edit'></i></a>";
+                $deleteBtn = "<a href = '" . route('vendor.products-variant-item.destroy', $query->id) . "' class='btn btn-danger ml-2 delete-item'><i class='fas fa-trash-alt'></i></a>";
+
+                return  $editBtn . $deleteBtn;
             })
 
+            ->addColumn('product_variant', function ($query) {
+                return $query->productVariant->name;
+
+            })
+
+            ->addColumn('is_default', function ($query) {
+                $active = "<i class='badge bg-success'>Default</i> ";
+                $inactive = "<i class='badge bg-danger'>No</i> ";
+                if($query->is_default == 1){
+                    return $active;
+                }else{
+                    return $inactive;
+                }
+
+            })
 
             ->addColumn('status', function ($query) {
                 if ($query->status == 1) {
@@ -46,17 +59,16 @@ class VendorProductVariantDataTable extends DataTable
                 return $button;
 
             })
-            ->rawColumns([ 'action', 'status'])
+            ->rawColumns([ 'action', 'status', 'is_default'])
             ->setRowId('id');
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(ProductVariant $model): QueryBuilder
+    public function query(ProductVariantItem $model): QueryBuilder
     {
-        return $model->where('product_id', request()->product)->newQuery();
-
+        return $model->where('product_variant_id', request()->variantId)->newQuery();
     }
 
     /**
@@ -65,7 +77,7 @@ class VendorProductVariantDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('productvariant-table')
+                    ->setTableId('productvariantitem-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
@@ -88,13 +100,16 @@ class VendorProductVariantDataTable extends DataTable
     {
         return [
 
-            Column::make('id')->width(100),
+            Column::make('id'),
             Column::make('name'),
-            Column::make('status')->width(100),
+            Column::make('product_variant'),
+            Column::make('price'),
+            Column::make('is_default'),
+            Column::make('status'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                ->width(400)
+                ->width(200)
                 ->addClass('text-center'),
         ];
     }
@@ -104,6 +119,6 @@ class VendorProductVariantDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'ProductVariant_' . date('YmdHis');
+        return 'ProductVariantItem_' . date('YmdHis');
     }
 }
