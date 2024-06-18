@@ -18,7 +18,7 @@
                             <h4>Product: {{$product->name}}</h4>
 
                         </div>
-                        <form class="card-body" action="{{route('admin.products-variant.store')}}" method="POST" enctype="multipart/form-data">
+                        <form class="card-body" action="{{route('admin.products-image-gallery.store')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
                                 <label>Image <code>(Multiple image supported!)</code></label>

@@ -11,7 +11,8 @@ use Illuminate\Http\Request;
 
 class FlashSaleController extends Controller
 {
-    public function index(FlashSaleItemDataTable $dataTable){
+    public function index(FlashSaleItemDataTable $dataTable)
+    {
 
         $flashSaleEndDate = FlashSale::first();
 
@@ -21,8 +22,8 @@ class FlashSaleController extends Controller
     }
 
 
-
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         $request->validate([
             'end_date' => 'required'
         ]);
@@ -38,10 +39,15 @@ class FlashSaleController extends Controller
     }
 
 
-    public function addProduct(Request $request){
+    public function addProduct(Request $request)
+    {
 
         $request->validate([
-            'product' => 'required'
+            'product' => ['required','unique:flash_sale_items,product_id'],
+            'show_at_home' => 'required',
+            'status' => 'required'
+        ], [
+            'product.unique' => 'The product is already in flash sale!'
         ]);
 
 
@@ -55,6 +61,45 @@ class FlashSaleController extends Controller
         toastr('Product added successfully!', 'success');
 
         return redirect()->back();
+    }
+
+    public function changeShowAtHomeStatus(Request $request)
+    {
+        try {
+            $item = FlashSaleItem::findOrFail($request->id);
+
+            $item->show_at_home = $request->status === 'true' ? 1 : 0;
+            $item->save();
+
+            return response()->json(['message' => 'Status has been updated!']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error updating status'], 500);
+        }
+
+    }
+
+    public function changeStatus(Request $request)
+    {
+
+        try {
+            $item = FlashSaleItem::findOrFail($request->id);
+
+            $item->status = $request->status === 'true' ? 1 : 0;
+            $item->save();
+
+            return response()->json(['message' => 'Status has been updated!']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error updating status'], 500);
+        }
+
+    }
+
+    public function destroy(string $id)
+    {
+        $item = FlashSaleItem::findOrFail($id);
+        $item->delete();
+
+        return response(['status' => 'success', 'message' => 'Flash sale deleted successfully!']);
     }
 
 }

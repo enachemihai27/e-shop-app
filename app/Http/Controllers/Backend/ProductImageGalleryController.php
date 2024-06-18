@@ -39,6 +39,7 @@ class ProductImageGalleryController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'image.*' => ['required', 'image', 'max:2048'],
         ]);
@@ -58,7 +59,6 @@ class ProductImageGalleryController extends Controller
         toastr('Uploaded successfully!');
 
         return redirect()->back();
-
     }
 
     /**

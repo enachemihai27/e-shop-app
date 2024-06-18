@@ -111,7 +111,7 @@
                 let id = $(this).data('id');
 
                 $.ajax({
-                    url: "{{ route('admin.products.change-status') }}",
+                    url: "{{ route('admin.flash-sale.change-status') }}",
                     method: 'PUT',
                     data: {
                         status: isChecked,
@@ -126,6 +126,27 @@
                         console.log('Error:', error);
                         console.log('Status:', status);
                         console.log('Response:', xhr.responseText);
+                    }
+                });
+            });
+            //change show at home status
+            $('body').on('click', '.change-at-home-status', function (){
+                let isChecked = $(this).is(':checked');
+                let id = $(this).data('id');
+
+                $.ajax({
+                    url: "{{ route('admin.flash-sale.show-at-home.change-status') }}",
+                    method: 'PUT',
+                    data: {
+                        status: isChecked,
+                        id: id,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(data){
+                        toastr.success(data.message);
+                    },
+                    error: function(xhr, status, error){
+                        console.log('Error:', error);
                     }
                 });
             });
