@@ -42,7 +42,7 @@ class SettingController extends Controller
 
         );
 
-        toastr('Updated Successfully!', 'Success');
+        toastr('Updated Successfully!', 'success');
 
         return redirect()->back();
 
