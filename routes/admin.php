@@ -14,6 +14,7 @@ use App\Http\Controllers\Backend\ProductVariantItemController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\SellerProductController;
 use App\Http\Controllers\Backend\SettingController;
+use App\Http\Controllers\Backend\ShippingRuleController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use Illuminate\Support\Facades\Route;
@@ -96,6 +97,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->as('admin.')->group(
    /* Coupons routes*/
     Route::put('coupons/change-status', [CouponController::class, 'changeStatus'])->name('coupons.change-status');
     Route::resource('coupons', CouponController::class);
+
+
+    /* Shipping routes*/
+    Route::put('shipping-rules/change-status', [ShippingRuleController::class, 'changeStatus'])->name('shipping-rules.change-status');
+    Route::resource('shipping-rules', ShippingRuleController::class);
 
 
     /* General setting routes*/
