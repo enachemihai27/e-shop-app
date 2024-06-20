@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\FlashSaleController;
 use App\Http\Controllers\Frontend\FrontendProductController;
 use App\Http\Controllers\Frontend\HomeController;
@@ -30,6 +31,14 @@ Route::get('flash-sale', [FlashSaleController::class, 'index'])->name('flash-sal
 
 /*Product details routes*/
 Route::get('product-detail/{slug}', [FrontendProductController::class, 'showProduct'])->name('product-detail');
+
+
+/*Cart routes*/
+Route::post('add-to-card', [CartController::class, 'addToCart'])->name('add-to-cart');
+Route::GET('cart-details', [CartController::class, 'cartDetails'])->name('cart-details');
+Route::post('cart/update-quantity', [CartController::class, 'updateProductQty'])->name('cart.update-quantity');
+Route::post('cart-clear', [CartController::class, 'destroyCart'])->name('cart-clear');
+
 
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function(){
     Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
