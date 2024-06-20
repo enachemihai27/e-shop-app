@@ -5,10 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi"/>
+    <meta name="csrf_token" content="{{ csrf_token() }}"/>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
           rel="stylesheet">
     <title>One Shop || e-Commerce HTML Template</title>
-    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="icon" type="image/png" href="{{asset('frontend/images/favicon.png')}}">
     <link rel="stylesheet" href="{{asset('frontend/css/all.min.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/css/select2.min.css')}}">
@@ -39,8 +40,8 @@
 ==============================-->
 <div class="wsus__dashboard_menu">
     <div class="wsusd__dashboard_user">
-        <img src="images/dashboard_user.jpg" alt="img" class="img-fluid">
-        <p>anik roy</p>
+        <img src="{{\Illuminate\Support\Facades\Auth::user()->image}}" alt="img" class="img-fluid">
+        <p>{{\Illuminate\Support\Facades\Auth::user()->name}}</p>
     </div>
 </div>
 <!--=============================
@@ -100,7 +101,10 @@
 <!--main/custom js-->
 <script src="{{asset('frontend/js/main.js')}}"></script>
 
+<!--sweet alert js-->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+{{--toast messages--}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 <!-- Render Toastr notifications -->
@@ -113,6 +117,57 @@
             toastr.error("{{ $error }}");
         @endforeach
     @endif
+</script>
+
+<script>
+
+    $(document).ready(function () {
+        $('body').on('click', '.delete-item', function (event) {
+            event.preventDefault();
+            let deleteUrl = $(this).attr('href');
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                            type: 'DELETE',
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')},
+                            url: deleteUrl,
+
+                            success: function (data) {
+                                if (data.status == 'success') {
+                                    Swal.fire(
+                                        "Deleted!", data.message
+                                    )
+                                    window.location.reload();
+                                }else if(data.status == 'error'){
+                                    Swal.fire(
+                                        "Can t Delete!", data.message, 'error'
+                                    )
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                console.log(error);
+                            }
+                        }
+                    )
+
+                }
+            });
+
+
+        })
+
+
+    })
+
+
 </script>
 
 </body>
