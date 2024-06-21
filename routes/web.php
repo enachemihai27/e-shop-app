@@ -35,9 +35,15 @@ Route::get('product-detail/{slug}', [FrontendProductController::class, 'showProd
 
 /*Cart routes*/
 Route::post('add-to-card', [CartController::class, 'addToCart'])->name('add-to-cart');
-Route::GET('cart-details', [CartController::class, 'cartDetails'])->name('cart-details');
+Route::get('cart-details', [CartController::class, 'cartDetails'])->name('cart-details');
 Route::post('cart/update-quantity', [CartController::class, 'updateProductQty'])->name('cart.update-quantity');
-Route::post('cart-clear', [CartController::class, 'destroyCart'])->name('cart-clear');
+Route::post('clear-cart', [CartController::class, 'clearCart'])->name('clear.cart');
+Route::get('cart/remove-product/{rowId}', [CartController::class, 'removeProduct'])->name('cart.remove-product');
+Route::get('cart-count', [CartController::class, 'getCartCount'])->name('cart-count');
+Route::get('cart-products', [CartController::class, 'getCartProducts'])->name('cart-products');
+Route::post('cart/remove-sidebar-product', [CartController::class, 'removeSidebarProduct'])->name('cart.remove-sidebar-product');
+Route::get('cart-sidebar-product-total', [CartController::class, 'cartTotal'])->name('cart.sidebar-product-total');
+
 
 
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function(){

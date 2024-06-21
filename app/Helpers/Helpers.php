@@ -41,3 +41,7 @@ function productType(string $type) : string
         default => ""
     };
 }
+/*Get total cart amount*/
+function getCartTotal(){
+
+}

@@ -42,7 +42,7 @@
                                         product item
                                     </th>
 
-                                    <th class="wsus__pro_name">
+                                    <th class="wsus__pro_name" style="width: 285px;">
                                         product details
                                     </th>
 
@@ -61,10 +61,10 @@
 
                                     <th class="wsus__pro_icon">
 
-                                        <form action="{{route('cart-clear')}}" method="POST">
-                                            @csrf
-                                            <button type="submit" class="common_btn">clear cart</button>
-                                        </form>
+                              {{--          <form action="{{route('cart-clear')}}" method="POST">
+                                            @csrf--}}
+                                            <button type="submit" class="common_btn clear_cart">clear cart</button>
+                                {{--        </form>--}}
                                     </th>
                                 </tr>
                                 @foreach($cartItems as $item)
@@ -89,7 +89,7 @@
                                         </td>
 
                                         <td class="wsus__pro_tk">
-                                            <h6>{{$settings->currency_icon . ($item->price + $item->options->variants_total)}}</h6>
+                                            <h6 id="{{$item->rowId}}">{{$settings->currency_icon . (($item->price + $item->options->variants_total) * $item->qty)}}</h6>
                                         </td>
 
 
@@ -98,8 +98,8 @@
                                                 <button class="btn btn-danger product-decrement"
                                                         style="margin-right: 3px;">-
                                                 </button>
-                                                <input class="product-qty" type="text" min="1" max="100" value="1"
-                                                       data-rowid = "{{$item->rowId}}"
+                                                <input class="product-qty" type="text" min="1" max="100" value="{{$item->qty}}"
+                                                       data-rowid = "{{$item->rowId}}" readonly
                                                        style="width: 43px; height: 36px; padding-left: 5px"/>
                                                 <button class="btn btn-success product-increment"
                                                         style="margin-left: 3px;">+
@@ -109,10 +109,22 @@
 
 
                                         <td class="wsus__pro_icon">
-                                            <a href="#"><i class="far fa-times"></i></a>
+                                            <a href="{{route('cart.remove-product', $item->rowId)}}"><i class="far fa-times"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
+
+
+                                @if(count($cartItems) == 0)
+                                    <tr class="d-flex">
+                                        <td class="wsus__pro_icon" style="width:100%;">
+                                           Cart is empty!
+
+                                        </td>
+                                    </tr>
+
+                                @endif
+
                                 </tbody>
                             </table>
                         </div>
@@ -179,6 +191,7 @@
 
 @push('scripts')
     <script>
+        /*increment qty*/
         $(document).ready(function () {
             $('.product-increment').on('click', function () {
                 let input = $(this).siblings('.product-qty');
@@ -197,15 +210,84 @@
                     },
                     success: function (data) {
                         if(data.status == 'success'){
+                            let productId = '#'+rowId;
+                            let totalAmount = "{{$settings->currency_icon}}"+data.product_total;
+                            $(productId).text(totalAmount);
                             toastr.success(data.message);
                         }
                     },
                     error: function (data) {
-
                     }
                 })
             })
 
+
+            /*decrement qty*/
+            $('.product-decrement').on('click', function () {
+                let input = $(this).siblings('.product-qty');
+                let quantity = parseInt(input.val()) - 1;
+                let rowId = input.data('rowid');
+
+                if(quantity < 1) {
+                    quantity = 1;
+                }
+
+                input.val(quantity);
+
+                $.ajax({
+                    url: '{{route('cart.update-quantity')}}',
+                    method: 'POST',
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')},
+                    data: {
+                        quantity: quantity,
+                        rowId: rowId
+
+                    },
+                    success: function (data) {
+                        if(data.status == 'success'){
+                            let productId = '#'+rowId;
+                            let totalAmount = "{{$settings->currency_icon}}"+data.product_total;
+                            $(productId).text(totalAmount);
+                            toastr.success(data.message);
+                        }
+                    },
+                    error: function (data) {
+                    }
+                })
+            })
+
+            /*clear cart*/
+            $('.clear_cart').on('click', function (e){
+              e.preventDefault();
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "This action will clear your cart!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, clear it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                                type: 'POST',
+                                headers: {'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')},
+                                url: '{{route('clear.cart')}}',
+
+                                success: function (data) {
+                                    if(data.status == 'success'){
+                                        window.location.reload();
+                                    }
+                                },
+                                error: function (xhr, status, error) {
+                                    console.log(error);
+                                }
+                            }
+                        )
+
+                    }
+                });
+            })
         });
     </script>
 

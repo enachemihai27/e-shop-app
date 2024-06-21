@@ -19,7 +19,7 @@ class CartController extends Controller
         $variantTotalAmount = 0;
 
 
-        if($request->has('variants_items')) {
+        if ($request->has('variants_items')) {
             foreach ($request->variants_items as $item_id) {
                 $variantItem = ProductVariantItem::find($item_id);
                 $variants[$variantItem->productVariant->name]['name'] = $variantItem->name;
@@ -32,7 +32,7 @@ class CartController extends Controller
         $productPrice = 0;
         if (checkDiscount($product)) {
             $productPrice = $product->offer_price;
-        }else{
+        } else {
             $productPrice = $product->price;
         }
 
@@ -56,29 +56,82 @@ class CartController extends Controller
     }
 
 
-    public function cartDetails(){
+    public function cartDetails()
+    {
 
         $cartItems = Cart::content();
         return view('frontend.pages.cart-detail', compact('cartItems'));
 
     }
 
-    public function updateProductQty(Request $request){
+    public function updateProductQty(Request $request)
+    {
 
         Cart::update($request->rowId, $request->quantity);
+        $productTotal = $this->getTotalProduct($request->rowId);
 
-        return response(['status' => 'success', 'message' => 'Product quantity updated successfully!']);
-
-
+        return response(['status' => 'success', 'message' => 'Product quantity updated successfully!', 'product_total' => $productTotal]);
     }
 
-
-    public function destroyCart(){
+    public function clearCart()
+    {
 
         Cart::destroy();
 
-        toastr('Cart created Successfully', 'success');
+        return response(['status' => 'success', 'message' => 'Product cart cleared updated successfully!']);
+    }
+
+    public function removeProduct($rowId)
+    {
+        Cart::remove($rowId);
 
         return redirect()->back();
     }
+
+
+    /*Get product total*/
+    public function getTotalProduct($rowId)
+    {
+        $product = Cart::get($rowId);
+        $total = ($product->price + $product->options->variants_total) * $product->qty;
+
+        return $total;
+    }
+
+
+    /*Get total total*/
+    public function cartTotal()
+    {
+        $total = 0;
+        foreach (Cart::content() as $product){
+            $total += $this->getTotalProduct($product->rowId);
+        }
+
+        return $total;
+    }
+
+    /*Get cart count*/
+    public function getCartCount()
+    {
+        return Cart::content()->count();
+
+    }
+
+    /*Get all cart products*/
+    public function getCartProducts()
+    {
+        return Cart::content();
+    }
+
+
+    /*Remove sidebar Cart*/
+    public function removeSidebarProduct(Request $request)
+    {
+        Cart::remove($request->rowId);
+
+        return response(['status' => 'success', 'message' => 'Product removed successfully!']);
+    }
+
+
+
 }

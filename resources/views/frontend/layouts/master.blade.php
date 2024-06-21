@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="{{asset('frontend/css/ranger_style.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/css/jquery.classycountdown.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/css/venobox.min.css')}}">
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('frontend/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/css/responsive.css')}}">
     <!-- <link rel="stylesheet" href="css/rtl.css"> -->
@@ -150,57 +150,6 @@
 
 <!--main/custom js-->
 <script src="{{asset('frontend/js/main.js')}}"></script>
-
-<script>
-
-    $(document).ready(function () {
-        $('body').on('click', '.delete-item', function (event) {
-            event.preventDefault();
-            let deleteUrl = $(this).attr('href');
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                            type: 'DELETE',
-                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')},
-                            url: deleteUrl,
-
-                            success: function (data) {
-                                if (data.status == 'success') {
-                                    Swal.fire(
-                                        "Deleted!", data.message
-                                    )
-                                    window.location.reload();
-                                }else if(data.status == 'error'){
-                                    Swal.fire(
-                                        "Can t Delete!", data.message, 'error'
-                                    )
-                                }
-                            },
-                            error: function (xhr, status, error) {
-                                console.log(error);
-                            }
-                        }
-                    )
-
-                }
-            });
-
-
-        })
-
-
-    })
-
-
-</script>
 
 
 @stack('scripts')
