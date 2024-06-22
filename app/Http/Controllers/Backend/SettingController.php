@@ -20,12 +20,12 @@ class SettingController extends Controller
         $request->validate([
             'site_name' => ['required', 'max:200'],
             'layout' => ['required', 'max:200'],
-            'contact_email' => ['required', 'max:200'],
+            'contact_email' => ['required', 'max:200', 'email'],
+            'contact_phone' => ['required', 'max:200', 'regex:/^\+?[1-9]\d{1,14}$/'],
             'currency_name' => ['required', 'max:200'],
             'time_zone' => ['required', 'max:200'],
             'currency_icon' => ['required', 'max:200'],
         ]);
-
 
 
         GeneralSetting::updateOrCreate(
@@ -34,6 +34,7 @@ class SettingController extends Controller
                 'site_name' => $request->site_name,
                 'layout' => $request->layout,
                 'contact_email' => $request->contact_email,
+                'contact_phone' => $request->contact_phone,
                 'currency_name' => $request->currency_name,
                 'currency_icon' => $request->currency_icon,
                 'timezone' => $request->time_zone,

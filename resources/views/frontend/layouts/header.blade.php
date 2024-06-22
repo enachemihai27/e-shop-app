@@ -32,7 +32,7 @@
                         </div>
                         <div class="wsus__call_text">
                             <p>{{$settings->contact_email}}</p>
-                            <p>+569875544220</p>
+                            <p>{{$settings->contact_phone}}</p>
                         </div>
                     </div>
                     <ul class="wsus__icon_area">

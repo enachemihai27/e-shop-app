@@ -14,6 +14,7 @@ class GeneralSetting extends Model
         'site_name' ,
         'layout' ,
         'contact_email' ,
+        'contact_phone' ,
         'currency_name' ,
         'currency_icon',
         'timezone'

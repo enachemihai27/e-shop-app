@@ -24,6 +24,11 @@
                 </div>
 
                 <div class="form-group">
+                    <label>Contact phone</label>
+                    <input class="form-control" type="tel" name="contact_phone" maxlength="12" value="{{$generalSetting->contact_phone}}" required/>
+                </div>
+
+                <div class="form-group">
                     <label>Default Currency Name</label>
                     <select name="currency_name" class="form-control select2" value="">
                         <option value="">Select</option>
