@@ -15,7 +15,6 @@
                         getCartCount();
                         fetchSidebarCartProducts();
                         $('.mini_cart_actions').removeClass("d-none");
-                        toastr.options.positionClass = 'toast-bottom-right';
                         toastr.success(data.message,);
                     }else if(data.status == 'error'){
                         toastr.error(data.message,);
@@ -117,7 +116,7 @@
         })
 
 
-        //get sidebar cart sub total
+        //get sidebar cart sub total fo
         function getSidebarSubtotal(){
             $.ajax({
                 method: 'GET',
@@ -133,6 +132,7 @@
 
 
         }
+
     })
 
 </script>
