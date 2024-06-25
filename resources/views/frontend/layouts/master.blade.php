@@ -151,6 +151,7 @@
 <!--main/custom js-->
 <script src="{{asset('frontend/js/main.js')}}"></script>
 
+@include('frontend.layouts.scripts');
 
 @stack('scripts')
 

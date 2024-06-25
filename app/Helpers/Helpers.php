@@ -1,5 +1,6 @@
 <?php
 
+
 if (!function_exists('setActive')) {
     function setActive(array $route): string
     {
@@ -41,7 +42,14 @@ function productType(string $type) : string
         default => ""
     };
 }
-/*Get total cart amount*/
-function getCartTotal(){
+/*Get total total*/
+function cartTotal()
+{
+    $total = 0;
+    foreach (Cart::content() as $product){
+        $total += ($product->price + $product->options->variants_total) * $product->qty;
+    }
 
+    return $total;
 }
+

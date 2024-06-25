@@ -70,7 +70,7 @@
                                         <img src="{{ isset($product->imageGalleries[0]->image) ? asset($product->imageGalleries[0]->image) : asset($product->thumb_image) }}" alt="product" class="img-fluid w-100 img_2"/>
                                     </a>
                                     <ul class="wsus__single_pro_icon">
-                                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="far fa-eye"></i></a></li>
+                                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal-{{$product->id}}"><i class="far fa-eye"></i></a></li>
                                         <li><a href="#"><i class="far fa-heart"></i></a></li>
                                         <li><a href="#"><i class="far fa-random"></i></a></li>
                                     </ul>
@@ -92,7 +92,26 @@
                                         @else
                                             <p class="wsus__price">{{ $settings->currency_icon }} {{ $product->price }}</p>
                                         @endif
-                                        <a class="add_cart" href="#">add to cart</a>
+                                        <form class="shopping-cart-form">
+                                            <input type="hidden" name="product_id" value="{{$product->id}}">
+                                            @foreach($product->variants as $variant)
+                                                @if($variant->status == 1 && count($variant->productVariantItems)  >0)
+                                                    <select class="d-none" name="variants_items[]">
+                                                        @foreach($variant->productVariantItems as $item)
+                                                            @if($item->status == 1)
+                                                                <option value="{{$item->id}}" {{$item->is_default == 1 ? 'selected' : ''}}>{{$item->name}}  {{$item->price != 0 ? '(' . $settings->currency_icon . $item->price . ')' : ''}}</option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+
+                                                @endif
+                                            @endforeach
+                                            <input type="hidden" min="1" max="100" value="1" name="qty"/>
+
+                                            <button type="submit" class="add_cart" href="#">add to cart</button>
+
+
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -108,6 +127,8 @@
             </div>
         </div>
     </section>
+
+    @include('frontend.home.sections.product-modal')
 
 @endsection
 

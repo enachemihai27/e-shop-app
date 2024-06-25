@@ -47,7 +47,7 @@
                                     </th>
 
                                     <th class="wsus__pro_tk">
-                                        price
+                                        unit price
                                     </th>
 
                                     <th class="wsus__pro_tk">
@@ -214,6 +214,8 @@
                             let totalAmount = "{{$settings->currency_icon}}"+data.product_total;
                             $(productId).text(totalAmount);
                             toastr.success(data.message);
+                        }else if(data.status == 'error'){
+                            toastr.error(data.message);
                         }
                     },
                     error: function (data) {
@@ -249,6 +251,8 @@
                             let totalAmount = "{{$settings->currency_icon}}"+data.product_total;
                             $(productId).text(totalAmount);
                             toastr.success(data.message);
+                        }else if(data.status == 'error'){
+                            toastr.error(data.message);
                         }
                     },
                     error: function (data) {
