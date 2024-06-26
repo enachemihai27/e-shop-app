@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\CheckoutController;
+use App\Http\Controllers\Backend\PaymentController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\FlashSaleController;
 use App\Http\Controllers\Frontend\FrontendProductController;
@@ -60,5 +62,11 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     /*User Address routes*/
     Route::resource('address', UserAddressController::class);
 
+    /*Checkout routes*/
+    Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout');
+    Route::post('checkout/create-address', [CheckoutController::class, 'createAddress'])->name('checkout.create-address');
+    Route::post('checkout/form-submit', [CheckoutController::class, 'checkoutFormSubmit'])->name('checkout.form-submit');
 
+    /*Payment routes*/
+    Route::get('payment', [PaymentController::class, 'index'])->name('payment');
 });
