@@ -73,7 +73,8 @@
                     'admin.vendor-profile.*',
                     'admin.flash-sale.*',
                     'admin.coupons.*',
-                    'admin.shipping-rules.*'
+                    'admin.shipping-rules.*',
+                    'admin.payment-settings.*'
                     ])}}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                     <span>Ecommerce</span></a>
@@ -82,6 +83,9 @@
                     <li class="{{setActive(['admin.coupons.*'])}}"><a class="nav-link" href="{{route('admin.coupons.index')}}">Coupons</a></li>
                     <li class="{{setActive(['admin.shipping-rules.*'])}}"><a class="nav-link" href="{{route('admin.shipping-rules.index')}}">Shipping rule</a></li>
                     <li class="{{setActive(['admin.vendor-profile.*'])}}"><a class="nav-link" href="{{route('admin.vendor-profile.index')}}">Vendor profile</a></li>
+                    <li class="{{setActive(['admin.payment-settings.*'])}}"><a class="nav-link" href="{{route('admin.payment-settings.index')}}">Payment settings</a></li>
+
+
                 </ul>
             </li>
 

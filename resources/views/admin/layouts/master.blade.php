@@ -103,7 +103,11 @@
 
 {{--Dinamic delete alert--}}
 <script>
+
+
     $(document).ready(function () {
+        $('.select2').select2();
+
         $('body').on('click', '.delete-item', function (event) {
             event.preventDefault();
             let deleteUrl = $(this).attr('href');
