@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Currency rate ( Per USD )</label>
+                    <label>Currency rate ( Per {{$settings->currency_name}} )</label>
                     <input name="currency_rate" type="text" class="form-control" value="{{$paypalSetting->currency_rate}}">
                 </div>
 

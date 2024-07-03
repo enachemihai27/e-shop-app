@@ -19,29 +19,24 @@
                                     <div class="list-group" id="list-tab" role="tablist">
                                         <a class="list-group-item list-group-item-action active" id="list-home-list"
                                            data-toggle="list" href="#list-home" role="tab">Paypal</a>
-                                        <a class="list-group-item list-group-item-action" id="list-profile-list"
-                                           data-toggle="list" href="#list-profile" role="tab">Profile</a>
-                                        <a class="list-group-item list-group-item-action" id="list-messages-list"
-                                           data-toggle="list" href="#list-messages" role="tab">Messages</a>
-                                        <a class="list-group-item list-group-item-action" id="list-settings-list"
-                                           data-toggle="list" href="#list-settings" role="tab">Settings</a>
+
+                                        <a class="list-group-item list-group-item-action" id="list-stripe-list"
+                                           data-toggle="list" href="#list-stripe" role="tab">Stripe</a>
+
+                                        <a class="list-group-item list-group-item-action" id="list-cash-list"
+                                           data-toggle="list" href="#list-cash" role="tab">Cash on delivery</a>
                                     </div>
                                 </div>
                                 <div class="col-10">
                                     <div class="tab-content" id="nav-tabContent">
                                         @include('admin.payment-settings.sections.paypal-setting')
-                                        <div class="tab-pane fade" id="list-profile" role="tabpanel"
-                                             aria-labelledby="list-profile-list">
 
-                                        </div>
-                                        <div class="tab-pane fade" id="list-messages" role="tabpanel"
-                                             aria-labelledby="list-messages-list">
 
-                                        </div>
-                                        <div class="tab-pane fade" id="list-settings" role="tabpanel"
-                                             aria-labelledby="list-settings-list">
+                                        @include('admin.payment-settings.sections.stripe-setting')
 
-                                        </div>
+
+                                        @include('admin.payment-settings.sections.cash-on-delivery')
+
                                     </div>
                                 </div>
                             </div>
