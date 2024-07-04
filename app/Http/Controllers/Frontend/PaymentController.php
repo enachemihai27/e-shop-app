@@ -97,7 +97,8 @@ class PaymentController extends Controller
     }
 
 
-    public function clearSession(){
+    public function clearSession()
+    {
         Cart::destroy();
         Session::forget('address');
         Session::forget('shipping_method');
@@ -224,36 +225,37 @@ class PaymentController extends Controller
     }
 
 
-   /* stipe payment*/
+    /* stipe payment*/
     /**
      * @throws \Stripe\Exception\ApiErrorException
      */
-    public function payWithStripe(Request $request){
+    public function payWithStripe(Request $request)
+    {
 
         $stripeSetting = StripeSetting::first();
         $total = getFinalPayableAmount();
         $payableAmount = round($total * $stripeSetting->currency_rate, 2);
 
 
-
         Stripe::setApiKey($stripeSetting->secret_key);
-        Charge::create([
+        $response = Charge::create([
             "amount" => $payableAmount * 100,
             "currency" => $stripeSetting->currency_name,
             "source" => $request->stripe_token,
             "description" => "Product purchase!"
         ]);
 
-        dd('Success');
-    }
 
+        if($response->status == 'succeeded'){
+            $this->storeOrder('stripe', 1, $response->id, $payableAmount, $stripeSetting->currency_name);
 
-    public function stripeSuccess(Request $request){
+            $this->clearSession();
 
-    }
-
-    public function stripeCancel(){
-
+            return redirect()->route('user.payment.success');
+        }else{
+            toastr('Something went wrong try again later!', 'error');
+            return redirect()->route('user.payment');
+        }
     }
 
 }

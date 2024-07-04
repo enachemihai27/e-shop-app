@@ -50,8 +50,14 @@ trait ImageUploadHelper
         }
     }
 
-    public function deleteImage(string $path)
+    public function deleteImage(?string $path)
     {
+        if ($path === null) {
+            // Handle case where $path is null (maybe log an info message)
+            \Log::info('Trying to delete image, but path is null.');
+            return; // or throw an exception, or return a response, based on your application logic
+        }
+
         if (File::exists(public_path($path))) {
             File::delete(public_path($path));
         }
