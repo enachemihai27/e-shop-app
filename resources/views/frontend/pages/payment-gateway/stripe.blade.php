@@ -48,7 +48,7 @@
                 <form action="{{route('user.stripe.payment')}}" method="POST" id="checkout-form">
                     @csrf
                     <input type="hidden" name="stripe_token" id="stripe-token-id">
-                    <div style="padding: 18px;" class="border" id="card-element"></div>
+                    <div style="padding: 18px;" class="border border-4" id="card-element"></div>
                     <br>
                     <button class="nav-link common_btn" id="pay-btn" onclick="createToken()" type="button">Pay with Stripe</button>
                 </form>

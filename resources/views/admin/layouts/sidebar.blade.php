@@ -1,11 +1,10 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
+            <img width="30px" height="30px" src="{{asset('frontend/images/favicon.png')}}">
             <a href="{{route('admin.dashboard')}}">Sidebar</a>
         </div>
-        <div class="sidebar-brand sidebar-brand-sm">
-            <a href="index.html">St</a>
-        </div>
+
         <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>
             <li class="dropdown {{setActive([
@@ -35,6 +34,21 @@
                     <li class="{{setActive(['admin.child-category.*'])}}"><a class="nav-link"
                                                                              href="{{route('admin.child-category.index')}}">Child
                             Category</a></li>
+
+                </ul>
+            </li>
+
+            <li class="dropdown {{setActive([
+                    'admin.order.*',
+
+                    ])}}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
+                    <span>Manage Orders</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{setActive(['admin.order.*'])}}"><a class="nav-link"
+                                                                    href="{{route('admin.order.index')}}">All Orders</a>
+                    </li>
+
 
                 </ul>
             </li>
@@ -79,11 +93,21 @@
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                     <span>Ecommerce</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{setActive(['admin.flash-sale.*'])}}"><a class="nav-link" href="{{route('admin.flash-sale.index')}}">Flash sale</a></li>
-                    <li class="{{setActive(['admin.coupons.*'])}}"><a class="nav-link" href="{{route('admin.coupons.index')}}">Coupons</a></li>
-                    <li class="{{setActive(['admin.shipping-rules.*'])}}"><a class="nav-link" href="{{route('admin.shipping-rules.index')}}">Shipping rule</a></li>
-                    <li class="{{setActive(['admin.vendor-profile.*'])}}"><a class="nav-link" href="{{route('admin.vendor-profile.index')}}">Vendor profile</a></li>
-                    <li class="{{setActive(['admin.payment-settings.*'])}}"><a class="nav-link" href="{{route('admin.payment-settings.index')}}">Payment settings</a></li>
+                    <li class="{{setActive(['admin.flash-sale.*'])}}"><a class="nav-link"
+                                                                         href="{{route('admin.flash-sale.index')}}">Flash
+                            sale</a></li>
+                    <li class="{{setActive(['admin.coupons.*'])}}"><a class="nav-link"
+                                                                      href="{{route('admin.coupons.index')}}">Coupons</a>
+                    </li>
+                    <li class="{{setActive(['admin.shipping-rules.*'])}}"><a class="nav-link"
+                                                                             href="{{route('admin.shipping-rules.index')}}">Shipping
+                            rule</a></li>
+                    <li class="{{setActive(['admin.vendor-profile.*'])}}"><a class="nav-link"
+                                                                             href="{{route('admin.vendor-profile.index')}}">Vendor
+                            profile</a></li>
+                    <li class="{{setActive(['admin.payment-settings.*'])}}"><a class="nav-link"
+                                                                               href="{{route('admin.payment-settings.index')}}">Payment
+                            settings</a></li>
 
 
                 </ul>
