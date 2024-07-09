@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\VendorController;
+use App\Http\Controllers\Backend\VendorOrderController;
 use App\Http\Controllers\Backend\VendorProductController;
 use App\Http\Controllers\Backend\VendorProductImageGalleryController;
 use App\Http\Controllers\Backend\VendorProductVariantController;
@@ -48,4 +49,9 @@ Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->as('vendor.')->gro
     Route::delete('products-variant-item/{itemId}', [VendorProductVariantItemController::class, 'destroy'])->name('products-variant-item.destroy');
     Route::put('products-variant-item/change-status', [VendorProductVariantItemController::class, 'changeStatus'])->name('products-variant-item.change-status');
 
+
+
+    /*Orders routes*/
+    Route::get('orders', [VendorOrderController::class, 'index'])->name('orders.index');
+    Route::get('order/show/{id}', [VendorOrderController::class, 'show'])->name('order.show');
 });

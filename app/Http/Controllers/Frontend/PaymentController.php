@@ -62,6 +62,7 @@ class PaymentController extends Controller
         $order->coupon = json_encode(Session::get('coupon'));
         $order->order_status = 'pending';
 
+
         $order->save();
 
 

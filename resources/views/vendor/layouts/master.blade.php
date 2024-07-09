@@ -11,7 +11,7 @@
     <title>
         {{$settings->site_name}}
     </title>
-    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="icon" type="image/png" href="{{asset('frontend/images/favicon.png')}}">
     <link rel="stylesheet" href="{{asset('frontend/css/all.min.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/css/select2.min.css')}}">
@@ -44,8 +44,8 @@
 ==============================-->
 <div class="wsus__dashboard_menu">
     <div class="wsusd__dashboard_user">
-        <img src="images/dashboard_user.jpg" alt="img" class="img-fluid">
-        <p>anik roy</p>
+        <img src="{{asset(\Illuminate\Support\Facades\Auth::user()->image)}}" alt="img" class="img-fluid">
+        <p>{{\Illuminate\Support\Facades\Auth::user()->name}}</p>
     </div>
 </div>
 <!--=============================
