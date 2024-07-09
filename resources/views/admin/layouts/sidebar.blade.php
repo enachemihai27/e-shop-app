@@ -40,6 +40,7 @@
 
             <li class="dropdown {{setActive([
                     'admin.order.*',
+                    'admin.transaction.*'
 
                     ])}}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
@@ -47,6 +48,10 @@
                 <ul class="dropdown-menu">
                     <li class="{{setActive(['admin.order.*'])}}"><a class="nav-link"
                                                                     href="{{route('admin.order.index')}}">All Orders</a>
+                    </li>
+
+                    <li class="{{setActive(['admin.transaction.*'])}}"><a class="nav-link"
+                                                                    href="{{route('admin.transaction.index')}}">All Transactions</a>
                     </li>
 
 

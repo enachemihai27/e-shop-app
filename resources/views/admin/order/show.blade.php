@@ -1,3 +1,55 @@
+@php
+
+    $order_status_admin = [
+           'pending' => [
+               'status' => 'Pending',
+               'details' => 'Your order is currently pending'
+           ],
+           'processed_and_ready_to_ship' => [
+               'status' => 'Processed and ready to ship',
+               'details' => 'Your package has been processed nd will be with our delivery partner soon'
+
+           ],
+           'dropped_off' => [
+               'status' => 'Dropped Off',
+               'details' => 'Your package has been dropped off by the seller'
+           ],
+           'shipped' => [
+               'status' => 'Shipped',
+               'details' => 'Your package has arrived at our logistics facility',
+           ],
+           'out_for_delivery' => [
+               'status' => 'Out For Delivery',
+               'details' => 'Our delivery partner will attempt to delivery your package'
+
+           ],
+           'delivered' => [
+               'status' => 'Delivered',
+               'details' => 'Delivered'
+           ],
+           'canceled' => [
+               'status' => 'Canceled',
+               'details' => 'Canceled'
+           ]
+
+       ];
+
+       $order_status_vendor = [
+           'pending' => [
+               'status' => 'Pending',
+               'details' => 'Your order is currently pending'
+           ],
+           'processed_and_ready_to_ship' => [
+               'status' => 'processed and ready to ship',
+               'details' => 'Your package has been processed nd will be with our delivery partner soon'
+
+           ],
+       ];
+
+@endphp
+
+
+
 @extends('admin.layouts.master')
 
 @section('content')
@@ -103,7 +155,29 @@
                             </div>
                             <div class="row mt-4">
                                 <div class="col-lg-8">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="" Payment Status></label>
+                                            <select class="form-control" name="payment_status" id="payment_status" data-id="{{$order->id}}">
+                                                <option {{$order->payment_status == 0 ? 'selected' : ''}} value="0">Pending</option>
+                                                <option {{$order->payment_status == 1 ? 'selected' : ''}} value="1">Completed</option>
 
+
+                                            </select>
+
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="" Order Status></label>
+                                            <select name="order_status" id="order_status" data-id="{{$order->id}}"
+                                                    class="form-control">
+                                                @foreach($order_status_admin as $key => $orderStatus)
+                                                    <option
+                                                        {{$order->order_status == $key ? 'selected' : ''}} value="{{$key}}">{{$orderStatus['status']}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-lg-4 text-right">
                                     <div class="invoice-detail-item">
@@ -146,13 +220,8 @@
                 </div>
                 <hr>
                 <div class="text-md-right">
-                    <div class="float-lg-left mb-lg-0 mb-3">
-                        <button class="btn btn-primary btn-icon icon-left"><i class="fas fa-credit-card"></i> Process
-                            Payment
-                        </button>
-                        <button class="btn btn-danger btn-icon icon-left"><i class="fas fa-times"></i> Cancel</button>
-                    </div>
-                    <button class="btn btn-warning btn-icon icon-left"><i class="fas fa-print"></i> Print</button>
+
+                    <button class="btn btn-warning btn-icon icon-left print_invoice"><i class="fas fa-print"></i> Print</button>
                 </div>
             </div>
         </div>
@@ -161,3 +230,71 @@
     </section>
 
 @endsection
+
+
+@push('scripts')
+
+    <script>
+
+
+        $(document).ready(function () {
+            $('#order_status').on('change', function () {
+                let status = $(this).val();
+                let id = $(this).data('id');
+                $.ajax({
+                        method: 'GET',
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')},
+                        url: '{{route('admin.order.change-status')}}',
+                        data: {status: status, id: id},
+                        success: function (data) {
+                            if (data.status == 'success') {
+                                toastr.success(data.message);
+                            }
+
+                        },
+                        error: function (xhr, status, error) {
+                            console.log(error);
+                        }
+                    }
+                )
+
+            })
+
+
+            $('#payment_status').on('change', function () {
+                let status = $(this).val();
+                let id = $(this).data('id');
+                $.ajax({
+                        method: 'GET',
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')},
+                        url: '{{route('admin.payment.status')}}',
+                        data: {status: status, id: id},
+                        success: function (data) {
+                            if (data.status == 'success') {
+                                toastr.success(data.message);
+                            }
+
+                        },
+                        error: function (xhr, status, error) {
+                            console.log(error);
+                        }
+                    }
+                )
+
+            })
+
+
+            $('.print_invoice').on('click', function (){
+                let printBody = $('.invoice-print');
+                let originalContents = $('body').html();
+                $('body').html(printBody.html());
+                window.print();
+                $('body').html(originalContents);
+
+            })
+
+        })
+
+    </script>
+
+@endpush

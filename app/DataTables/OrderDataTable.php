@@ -52,12 +52,27 @@ class OrderDataTable extends DataTable
                     case 'pending' :
                         return "<i class='badge badge-warning'>Pending</i>";
                         break;
-                    case 'approved' :
-                        return "<i class='badge badge-success'>Approved</i>";
+                    case 'processed_and_ready_to_ship' :
+                        return "<i class='badge badge-info'>Processed</i>";
                         break;
 
-                    case 'refused' :
-                        return "<i class='badge badge-danger'>Refused</i>";
+                    case 'dropped_off' :
+                        return "<i class='badge badge-info'>Dropped off</i>";
+                        break;
+
+                    case 'shipped' :
+                        return "<i class='badge badge-info'>Shipped</i>";
+                        break;
+                    case 'out_for_delivery' :
+                        return "<i class='badge badge-primary'>Out for delivery</i>";
+                        break;
+
+                    case 'delivered' :
+                        return "<i class='badge badge-success'>Delivered</i>";
+                        break;
+
+                    case 'canceled' :
+                        return "<i class='badge badge-danger'>Canceled</i>";
                         break;
                     default :
                         return "<i class='badge badge-danger'>None</i>";

@@ -21,6 +21,7 @@ use App\Http\Controllers\Backend\ShippingRuleController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\StripeSettingController;
 use App\Http\Controllers\Backend\SubCategoryController;
+use App\Http\Controllers\Backend\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 /*Admin Routes*/
@@ -108,8 +109,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->as('admin.')->group(
     Route::resource('shipping-rules', ShippingRuleController::class);
 
     /*Order routes*/
-    Route::put('order/change-status', [OrderController::class, 'changeStatus'])->name('order.change-status');
+    Route::get('payment-status', [OrderController::class, 'changePaymentStatus'])->name('payment.status');
+    Route::get('change-status', [OrderController::class, 'changeOrderStatus'])->name('order.change-status');
     Route::resource('order', OrderController::class);
+
+    /*Order transaction routes*/
+    Route::get('transaction', [TransactionController::class, 'index'])->name('transaction.index');
 
     /* General setting routes*/
     Route::get('settings', [SettingController::class, 'index'])->name('setting.index');
