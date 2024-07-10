@@ -54,4 +54,5 @@ Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->as('vendor.')->gro
     /*Orders routes*/
     Route::get('orders', [VendorOrderController::class, 'index'])->name('orders.index');
     Route::get('order/show/{id}', [VendorOrderController::class, 'show'])->name('order.show');
+    Route::get('order/status/{id}', [VendorOrderController::class, 'orderStatus'])->name('order.status');
 });
