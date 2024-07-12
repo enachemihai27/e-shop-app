@@ -151,6 +151,17 @@
 <!--main/custom js-->
 <script src="{{asset('frontend/js/main.js')}}"></script>
 
+<script>
+
+    $(document).ready(function (){
+        $('.auto_click').click();
+
+    });
+
+
+
+</script>
+
 @include('frontend.layouts.scripts');
 
 @stack('scripts')
