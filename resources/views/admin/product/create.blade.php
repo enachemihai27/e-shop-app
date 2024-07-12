@@ -225,17 +225,13 @@
                     data: {
                         id: id
                     },
-
                     success: function (data) {
                         $('.child-category').html('<option value="">Select</option>');
-
 
                         $.each(data, function (i, item) {
                             $('.child-category').append(`<option value="${item.id}">${item.name}</option>`);
 
-
                         })
-
                     },
                     error: function (xhr, status, error) {
                         console.log(error);
