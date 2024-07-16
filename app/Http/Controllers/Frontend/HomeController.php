@@ -12,7 +12,7 @@ use App\Models\HomePageSetting;
 use App\Models\Product;
 use App\Models\Slider;
 use App\Models\SubCategory;
-use Illuminate\Http\Request;
+
 
 class HomeController extends Controller
 {
@@ -23,13 +23,33 @@ class HomeController extends Controller
         $flashSaleItems = FlashSaleItem::where('show_at_home', 1)->where('status', 1)->get();
         $categoriesAndProducts = $this->getPopularCategory();
         $brands = Brand::where('status', 1)->where('is_featured', 1)->get();
+        $typeBaseProduct = $this->getTypeBaseProduct();
         return view('frontend.home.home',
             compact('sliders',
                 'flashSaleDate',
                 'flashSaleItems',
                 'categoriesAndProducts',
-                'brands'));
+                'brands',
+                'typeBaseProduct'));
     }
+
+    private function getTypeBaseProduct(){
+        $typeBaseProduct = [];
+
+        $newArrival = Product::where(['product_type' => 'new_arrival', 'is_approved' => 1, 'status' => 1])->orderBy('id', 'DESC')->take(8)->get();
+        $featuredProduct = Product::where(['product_type' => 'featured', 'is_approved' => 1, 'status' => 1])->orderBy('id', 'DESC')->take(8)->get();
+        $topProduct = Product::where(['product_type' => 'top_product', 'is_approved' => 1, 'status' => 1])->orderBy('id', 'DESC')->take(8)->get();
+        $bestProduct = Product::where(['product_type' => 'best_product', 'is_approved' => 1, 'status' => 1])->orderBy('id', 'DESC')->take(8)->get();
+
+
+        $typeBaseProduct['new_arrival'] = $newArrival;
+        $typeBaseProduct['featured_product'] = $featuredProduct;
+        $typeBaseProduct['top_product'] = $topProduct;
+        $typeBaseProduct['best_product'] = $bestProduct;
+
+        return $typeBaseProduct;
+    }
+
 
     private function getPopularCategory()
     {
