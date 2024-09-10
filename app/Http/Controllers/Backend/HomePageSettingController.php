@@ -19,12 +19,26 @@ class HomePageSettingController extends Controller
 
         $popularCategorySection = HomePageSetting::where('key', 'popular_category_section')->first();
 
-        return view("admin.home-page-setting.index", compact('categories', 'popularCategorySection'));
+        $slicerSectionOne = HomePageSetting::where('key', 'product_slider_section_one')->first();
+
+        return view("admin.home-page-setting.index", compact('categories', 'popularCategorySection', 'slicerSectionOne'));
     }
 
 
     public function updatePopularCategorySection(Request $request)
     {
+
+        $request->validate([
+            'category_1' => ['required'],
+            'category_2' => ['required'],
+            'category_3' => ['required'],
+            'category_4' => ['required']
+        ],
+            ['category_1.required' => 'Category one filed is required'],
+            ['category_2.required' => 'Category two filed is required'],
+            ['category_3.required' => 'Category three filed is required'],
+            ['category_4.required' => 'Category four filed is required']
+        );
 
         $data = [
             [
@@ -66,6 +80,38 @@ class HomePageSettingController extends Controller
 
         return redirect()->back()->with('message', 'Success');
 
+    }
+
+    public function updateProductSliderSectionOne (Request $request){
+
+
+        $request->validate([
+            'category_1' => ['required']
+        ],
+        ['category_1.required' => 'Category filed is required']
+        );
+
+        $data = [
+                'category' => $request->category_1,
+                'sub_category' => $request->sub_category_1,
+                'child_category' => $request->child_category_1,
+        ];
+
+        HomePageSetting::updateOrCreate(
+            [
+                'key' => 'product_slider_section_one'
+            ],
+            [
+                'value' => json_encode($data)
+
+            ]
+        );
+
+
+        toastr('Success', 'success');
+
+
+        return redirect()->back()->with('message', 'Success');
 
 
     }
