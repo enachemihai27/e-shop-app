@@ -25,6 +25,7 @@ class HomeController extends Controller
         $brands = Brand::where('status', 1)->where('is_featured', 1)->get();
         $typeBaseProduct = $this->getTypeBaseProduct();
         $categoryProductSliderSectionOne = HomePageSetting::where('key', 'product_slider_section_one')->first();
+        $categoryProductSliderSectionTwo = HomePageSetting::where('key', 'product_slider_section_two')->first();
 
         return view('frontend.home.home',
             compact('sliders',
@@ -33,10 +34,12 @@ class HomeController extends Controller
                 'categoriesAndProducts',
                 'brands',
                 'typeBaseProduct',
-                'categoryProductSliderSectionOne'));
+                'categoryProductSliderSectionOne',
+                'categoryProductSliderSectionTwo'));
     }
 
-    private function getTypeBaseProduct(){
+    private function getTypeBaseProduct()
+    {
         $typeBaseProduct = [];
 
         $newArrival = Product::where(['product_type' => 'new_arrival', 'is_approved' => 1, 'status' => 1])->orderBy('id', 'DESC')->take(8)->get();

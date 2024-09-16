@@ -21,7 +21,7 @@
 
                                         <a class="list-group-item list-group-item-action active" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab">Popular Category Section</a>
                                         <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab">Product Slider Section One</a>
-                                        <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab">Settings</a>
+                                        <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab">Product Slider Section Two</a>
                                     </div>
                                 </div>
                                 <div class="col-10">
@@ -34,10 +34,9 @@
                                         @include('admin.home-page-setting.sections.product-category-section-one')
 
 
-                                        </div>
-                                        <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
+                                        @include('admin.home-page-setting.sections.product-category-section-two')
 
-                                        </div>
+
                                     </div>
                                 </div>
                             </div>
