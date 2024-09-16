@@ -77,7 +77,7 @@
 <!--============================
     LARGE BANNER  START
 ==============================-->
-{{--@include('frontend.home.sections.large-banner')--}}
+@include('frontend.home.sections.large-banner')
 <!--============================
     LARGE BANNER  END
 ==============================-->
@@ -86,7 +86,7 @@
 <!--============================
     WEEKLY BEST ITEM START
 ==============================-->
-{{--@include('frontend.home.sections.weekly-best-item')--}}
+@include('frontend.home.sections.weekly-best-item')
 <!--============================
     WEEKLY BEST ITEM END
 ==============================-->

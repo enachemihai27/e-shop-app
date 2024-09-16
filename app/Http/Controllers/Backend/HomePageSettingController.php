@@ -23,7 +23,9 @@ class HomePageSettingController extends Controller
 
         $slicerSectionTwo = HomePageSetting::where('key', 'product_slider_section_two')->first();
 
-        return view("admin.home-page-setting.index", compact('categories', 'popularCategorySection', 'slicerSectionOne', 'slicerSectionTwo'));
+        $slicerSectionThree = HomePageSetting::where('key', 'product_slider_section_three')->first();
+
+        return view("admin.home-page-setting.index", compact('categories', 'popularCategorySection', 'slicerSectionOne', 'slicerSectionTwo', 'slicerSectionThree'));
     }
 
 
@@ -137,6 +139,50 @@ class HomePageSettingController extends Controller
         HomePageSetting::updateOrCreate(
             [
                 'key' => 'product_slider_section_two'
+            ],
+            [
+                'value' => json_encode($data)
+
+            ]
+        );
+
+
+        toastr('Success', 'success');
+
+
+        return redirect()->back()->with('message', 'Success');
+
+
+    }
+
+
+    public function updateProductSliderSectionThree (Request $request){
+
+
+        $request->validate([
+            'category_1' => ['required'],
+            'category_2' => ['required']
+        ],
+            ['category_1.required' => 'Part 1 Category filed is required',
+            'category_2.required' => 'Part 2 Category filed is required']
+        );
+
+        $data = [
+            [
+                'category' => $request->category_1,
+                'sub_category' => $request->sub_category_1,
+                'child_category' => $request->child_category_1,
+            ],
+            [
+                'category' => $request->category_2,
+                'sub_category' => $request->sub_category_2,
+                'child_category' => $request->child_category_2,
+            ],
+        ];
+
+        HomePageSetting::updateOrCreate(
+            [
+                'key' => 'product_slider_section_three'
             ],
             [
                 'value' => json_encode($data)
